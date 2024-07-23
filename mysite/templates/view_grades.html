@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+<h2>Note Finale</h2>
+<table class="table">
+    <tr>
+        <th>Nume</th>
+        <th>Initiala Tatalui</th>
+        <th>Prenume</th>
+        <th>Titlul Eseului</th>
+        <th>Nota 1</th>
+        <th>Nota 2</th>
+        <th>Nota Finala</th>
+    </tr>
+    <tr>
+        <td>{{ student.nume }}</td>
+        <td>{{ student.initiala_tatalui }}</td>
+        <td>{{ student.prenume }}</td>
+        <td>{{ student.incarcarepdf.titlul_lucrarii }}</td>
+        <td>{% if student.nota1 %}{{ student.nota1|join:", " }}{% else %}N/A{% endif %}</td>
+        <td>{% if student.nota2 %}{{ student.nota2|join:", " }}{% else %}N/A{% endif %}</td>
+        <td>{{ student.notaFinala|floatformat:2 }}</td>
+    </tr>
+</>
+{% endblock %}

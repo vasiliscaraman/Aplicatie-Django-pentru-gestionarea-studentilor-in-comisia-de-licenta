@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% block title %} Verificare înscrieri {% endblock %}
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+<h1>Verificare documente înscriere</h1>
+<hr class="mt-0 mb-4">
+
+<form method="post">
+    {% csrf_token %}
+    {% for user, incarcare in user_incarcare_pairs %}
+        <div>
+            <h3>{{ user.nume }} {{ user.initiala_tatalui }}. {{ user.prenume }}</h3>
+            <p>Titlul lucrării: {{ incarcare.titlul_lucrarii }}</p>
+            <p>Descrierea lucrării: {{ incarcare.descrierea_lucrarii }}</p>
+            <p>Lucrare de licență: <a href="{{ incarcare.eseu.url }}" target="_blank">Vezi</a></p>
+            <p>Fișa de înscriere: <a href="{{ incarcare.fisa_inscriere.url }}" target="_blank">Vezi</a></p>
+            <p>Declarație de autenticitate: <a href="{{ incarcare.declaratie_autenticitate.url }}" target="_blank">Vezi</a></p>
+
+            <label for="status_{{ user.id }}">Status:</label>
+            <select id="status_{{ user.id }}" name="status_{{ user.id }}">
+                <option value="waiting" {% if user.status == 'waiting' %}selected{% endif %}>Waiting</option>
+                <option value="approved" {% if user.status == 'approved' %}selected{% endif %}>Approved</option>
+                <option value="rejected" {% if user.status == 'rejected' %}selected{% endif %}>Rejected</option>
+            </select>
+
+            <label for="rejection_reason_{{ user.id }}">Motiv respingere:</label>
+            <textarea id="rejection_reason_{{ user.id }}" name="rejection_reason_{{ user.id }}">{{ user.rejection_reason }}</textarea>
+        </div>
+        <hr>
+    {% endfor %}
+    <button type="submit" class="btn btn-primary">Finalizare</button>
+</form>
+
+{% endblock %}

@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+
+    {% if user.is_authenticated %}
+        <h1 class="mt-2">Acasă</h1>
+        <hr class="mt-0 mb-4">
+        Bună {{ user.nume }} {{ user.prenume }}!
+        <p><a href="{% url 'logout' %}">Deconectare</a></p>
+    {% else %}
+        <div id="content", name="content", class="home">
+            <div class="row justify-content-center">
+                <div class="col-8">
+                    <h1 class="mt-2">Acasă</h1>
+                    <hr class="mt-0 mb-4">
+                    <p>Nu ești conectat!</p>
+                    <a href="{% url 'login' %}">Conectare</a>  |
+                    <a href="{% url 'signup' %}">Înregistrare</a>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+{% endblock %}

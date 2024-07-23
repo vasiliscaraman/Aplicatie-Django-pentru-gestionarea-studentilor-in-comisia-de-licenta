@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% block title %} Înscriere {% endblock %}
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+<h2>Înscriere</h2>
+<hr class="mt-0 mb-4">
+{% if status == 'rejected' %}
+<p>Documentele dvs. sunt respinse. Vă rugăm să le încărcați din nou. Motivul respingerii: {{ rejection_reason }}</p>
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form|crispy }}
+    <button type="submit" name="inscrie" class="btn btn-success">Înscrie-te</button>
+</form>
+{% elif status == 'waiting' and este_inscris %}
+<p>Documentele dvs. sunt în curs de verificare. Vă rugăm să reveniți mai târziu.</p>
+{% elif status == 'approved' %}
+<p>Documentele dvs. au fost aprobate.</p>
+{% elif not este_inscris %}
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form|crispy }}
+    <button type="submit" name="inscrie" class="btn btn-success">Înscrie-te</button>
+</form>
+{% else %}
+<p>Status nerecunoscut.</p>
+{% endif %}
+{% endblock %}
+
+
+
+
+
+
+
+
+
+
+
+

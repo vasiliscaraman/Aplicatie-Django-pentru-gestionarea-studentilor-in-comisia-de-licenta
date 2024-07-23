@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+<h2>Lista rezultatelor finale la examenul de licență</h2>
+<a href="{% url 'generate_pdf' %}" class="btn btn-primary mb-3">Descarcă rezultate</a>
+<table>
+    <tr>
+        <th>Nume</th>
+        <th>Initiala Tatalui</th>
+        <th>Prenume</th>
+        <th>Titlul Eseului</th>
+        <th>Nota 1</th>
+        <th>Nota 2</th>
+        <th>Nota Finala</th>
+    </tr>
+    {% for student in students %}
+    <tr>
+        <td>{{ student.nume }}</td>
+        <td>{{ student.initiala_tatalui }}</td>
+        <td>{{ student.prenume }}</td>
+        <td>{{ student.incarcarepdf.titlul_lucrarii }}</td>
+        <td>{{ student.nota1|join:", " }}</td>
+        <td>{{ student.nota2|join:", " }}</td>
+        <td>{{ student.notaFinala|floatformat:2 }}</td>
+    </tr>
+    {% endfor %}
+</table>
+{% endblock %}

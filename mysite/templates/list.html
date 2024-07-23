@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% block title %} Lista studenților înscriși {% endblock %}
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+<h2>Lista studenților</h2>
+<hr class="mt-0 mb-4">
+<table>
+    <tr>
+        <th>Nume</th>
+        <th>Initiala Tatalui</th>
+        <th>Prenume</th>
+        <th>Titlul lucrării</th>
+        <th>Lucrarea de licență</th>
+        <th>Nota 1</th>
+        <th>Nota 2</th>
+        <th>Action</th>
+    </tr>
+    {% for student in students %}
+    <tr>
+        <td>{{ student.nume }}</td>
+        <td>{{ student.initiala_tatalui }}</td>
+        <td>{{ student.prenume }}</td>
+        <td>{{ student.incarcarepdf.titlul_lucrarii }}</td>
+        <td><a href="{{ student.incarcarepdf.eseu.url }}" target="_blank">Vezi lucrare</a></td>
+        <td>
+            <input type="text" name="nota1_{{ student.id }}" value="{{ student.nota1 }}">
+        </td>
+        <td>
+            <input type="text" name="nota2_{{ student.id }}" value="{{ student.nota2 }}">
+        </td>
+        <td><a href="{% url 'grade_student' student.id %}">Notă</a></td>
+    </tr>
+    {% endfor %}
+</table>
+<form method="post">
+    {% csrf_token %}
+    <button type="submit">Salvează notele</button>
+</form>
+{% endblock %}

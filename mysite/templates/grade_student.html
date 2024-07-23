@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block title %} Lista rezultatelor finale {% endblock %}
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+<h2>Lista rezultatelor finale</h2>
+<h2>Grade Student: {{ student.nume }} {{ student.prenume }}</h2>
+<hr class="mt-0 mb-4">
+<form method="post">
+    {% csrf_token %}
+    <label for="nota1">Nota 1:</label>
+    <input type="number" step="0.01" min="1" max="10" name="nota1" required>
+    <br>
+    <label for="nota2">Nota 2:</label>
+    <input type="number" step="0.01" min="1" max="10" name="nota2" required>
+    <br>
+    <button type="submit">Submit</button>
+</form>
+
+
+{% endblock %}
